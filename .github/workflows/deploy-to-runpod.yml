@@ -20,8 +20,8 @@ jobs:
       run: docker buildx build --push --tag ${{ secrets.RUNPOD_IMAGE_NAME }} .
 
     - name: Resume RunPod pod
-          run: |
-            curl --request POST \
-              --header 'content-type: application/json' \
-              --url 'https://api.runpod.io/graphql?api_key=${{ secrets.RUNPOD_API_KEY }}' \
-              --data '{"query": "mutation { podResume( input: { podId: \"${{ secrets.RUNPOD_POD_ID }}\", gpuCount: 1 } ) { id desiredStatus imageName env machineId machine { podHostId } } }"}'
+      run: |
+        curl --request POST \
+          --header 'content-type: application/json' \
+          --url 'https://api.runpod.io/graphql?api_key=${{ secrets.RUNPOD_API_KEY }}' \
+          --data '{"query": "mutation { podResume( input: { podId: \"${{ secrets.RUNPOD_POD_ID }}\", gpuCount: 1 } ) { id desiredStatus imageName env machineId machine { podHostId } } }"}'
