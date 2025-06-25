@@ -550,9 +550,9 @@ class AudioProcessor:
                             logger.info(f"{task_name} completed normally.")
                 
                 ffmpeg_idle_time = current_time - self.last_ffmpeg_activity
-                if ffmpeg_idle_time > 20:
+                if ffmpeg_idle_time > 50:
                     logger.warning(f"FFmpeg idle for {ffmpeg_idle_time:.2f}s - may need attention.")
-                    if ffmpeg_idle_time > 30:
+                    if ffmpeg_idle_time > 59:
                         logger.error("FFmpeg idle for too long and not in stopping phase, forcing restart.")
                         await self.restart_ffmpeg()
             except asyncio.CancelledError:
