@@ -24,7 +24,7 @@ RUN apt-get update && \
 
 
 
-RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128 --upgrade --force-reinstall
 
 
 COPY . .
@@ -80,4 +80,4 @@ RUN if [ -n "$HF_TKN_FILE" ]; then \
 EXPOSE 8000
 
 # Default args
-CMD ["python3", "whisperlivekit/basic_server.py", "--host", "0.0.0.0", "--port", "8000", "--model", "small", "--language", "en", "--min-chunk-size", "3"]
+CMD ["python3", "whisperlivekit/basic_server.py", "--host", "0.0.0.0", "--port", "8000", "--model", "medium", "--language", "ur", "--min-chunk-size", "3"]
