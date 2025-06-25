@@ -19,11 +19,9 @@ jobs:
     - name: Build & push Docker image
       run: docker buildx build --push --tag ${{ secrets.RUNPOD_IMAGE_NAME }} .
 
-    - name: Trigger RunPod redeploy
-      run: |
-        curl -X POST https://api.runpod.io/graphql \
-          -H "Authorization: ${{ secrets.RUNPOD_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "query": "mutation { updatePod(input: {podId: \"${{ secrets.RUNPOD_POD_ID }}\", dockerArgs: \"--gpus all\", containerImageName: \"${{ secrets.RUNPOD_IMAGE_NAME }}\" }) { id } }"
-          }'
+    - name: Resume RunPod pod
+          run: |
+            curl --request POST \
+              --header 'content-type: application/json' \
+              --url 'https://api.runpod.io/graphql?api_key=${{ secrets.RUNPOD_API_KEY }}' \
+              --data '{"query": "mutation { podResume( input: { podId: \"${{ secrets.RUNPOD_POD_ID }}\", gpuCount: 1 } ) { id desiredStatus imageName env machineId machine { podHostId } } }"}'
